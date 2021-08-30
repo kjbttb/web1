@@ -1,0 +1,63 @@
+<html>
+  <head>
+    <title>HUFS Lecture 3rd_HTTP</title>
+    <link href="index1.css" type="text/css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  </head>
+  <body>
+    <div id="header">
+      <div id="header-area">
+        <img src="images/icons/logo.png" />
+      </div>
+    </div>
+    <div id="body">
+      <div id="banner">
+        <img src="images/banners/banner1.png" />
+      </div>
+      <h1>새로운 강좌들</h1>
+      <div id="lecture-list"></div>
+    </div>
+    <div id="footer"></div>
+  </body>
+  <script>
+    axios
+      .get("")
+      .then(function (result) {
+        console.log("통신 결과 : ", result);
+        const lectures = result.data.lectures;
+
+        let lecturesHtml = "";
+        for (var i = 0; i < lectures.length; i++) {
+          let lecture = lectures[i];
+          lecturesHtml =
+            lecturesHtml +
+            '<div class="lecture-card">' +
+            "<div>" +
+            '<img class="lecture-img" src="' +
+            lecture.imageUrl +
+            '" />' +
+            "</div>" +
+            '<div class="lecture-contents">' +
+            '<span class="lecture-name">' +
+            lecture.name +
+            "</span>" +
+            '<span class="lecture-price">' +
+            lecture.price +
+            "원" +
+            "</span>" +
+            '<div class="lecture-seller">' +
+            '<img class="lecture-avatar" src="images/icons/avatar.png" />' +
+            "<span>" +
+            lecture.seller +
+            "</span>" +
+            "</div>" +
+            "</div>" +
+            "</div>";
+        }
+        document.querySelector("#lecture-list").innerHTML = lecturesHtml;
+      })
+      .catch(function (error) {
+        console.error("error 발생 : ", error);
+      });
+  </script>
+</html>
